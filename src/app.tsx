@@ -13,10 +13,10 @@ const Header = () => (
 	</header>
 );
 //
-const pages = import.meta.glob('./client/*.tsx', { eager: true })
+const pages = import.meta.glob('./pages/*.tsx', { eager: true })
 
 const routes = Object.keys(pages).map((path) => {
-  const name = path.match(/\.\/client\/(.*)\.tsx$/)[1]
+  const name = path.match(/\.\/pages\/(.*)\.tsx$/)[1]
   return {
     name,
     path: name === 'Home' ? '/' : `/${name.toLowerCase()}`,
@@ -25,7 +25,8 @@ const routes = Object.keys(pages).map((path) => {
 })
 console.log(routes);
 //
-const App = () => (
+export function App() {
+  return (
   <div class="app">
     <Header />
     <Router>
@@ -37,8 +38,9 @@ const App = () => (
     })}
     </Router>
   </div>
-);
-render(<App />, document.getElementById('app')!);
+  );
+}
+//render(<App />, document.getElementById('app')!);
 /*
 <Component path="/about" />
 */
