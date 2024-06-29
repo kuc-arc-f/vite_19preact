@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises'
 import express from 'express'
 //
-import testRouter from './server/api/test';
+import testRouter from './api/test';
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production'
@@ -62,11 +62,12 @@ app.use('*', async (req, res) => {
       render = (await vite.ssrLoadModule('/src/entry-server.tsx')).render
     } else {
       template = templateHtml
-      render = (await import('./dist/server/entry-server.js')).render
+      render = (await import('./server/entry-server.js')).render
     }
 
-    const rendered = await render(url, ssrManifest)
-
+    const rendered = await render(url, ssrManifest);
+    //console.log("html");
+    //console.log(rendered.html);
     const html = template
       .replace(`<!--app-head-->`, rendered.head ?? '')
       .replace(`<!--app-html-->`, rendered.html ?? '')
