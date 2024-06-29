@@ -1,5 +1,7 @@
 import fs from 'node:fs/promises'
 import express from 'express'
+//
+import testRouter from './server/api/test';
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production'
@@ -15,7 +17,11 @@ const ssrManifest = isProduction
   : undefined
 
 // Create http server
-const app = express()
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+//routes
+app.use('/api/test', testRouter);
 
 // Add Vite or respective production middlewares
 let vite
